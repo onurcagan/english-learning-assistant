@@ -1,16 +1,17 @@
-export const Word = (props: any) => {
-  if (props.wordsToShow.length === 0) return <></>
+import { capitalize } from '../utils/formatting'
+import { Definition } from './Definition'
 
-  const [word, definition, pronunciation]: Array<string> = Object.values(props.wordsToShow)
+export const Word = ({ word }: any) => {
+  if (word === undefined) return <p>Click The Generate Key!</p> // To show something when the site first loads without any words generated.
+
+  const wordCapitalized = capitalize(word)
 
   return (
     <>
       <h3>Word</h3>
-      <p>{word}</p>
-      <h3>Definition</h3>
-      <p>{definition}</p>
-      <h3>Pronunciation</h3>
-      <p>{pronunciation}</p>
+      <p>{wordCapitalized}</p>
+      <h3>Definition(s)</h3>
+      <Definition word={word} />
     </>
   )
 }
