@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'UniSansHeavy';
+  src: local('UniSansHeavy'), url('./fonts/UniSansHeavy.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'UniSansThin';
+  src: local('UniSansThin'), url('./fonts/UniSansThin.otf') format('truetype');
+  font-weight: 100;
+}
+
+body,
+html,
+#root {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  font-family: UniSansHeavy;
+  font-size: medium;
+}
+
+h3 {
+  margin-top: 30px;
+  text-decoration: underline;
+  color: BurlyWood;
+}
+
+li {
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+ol {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: -10px;
+}
+
+hr {
+  width: 70%;
+  border: 1px solid burlywood;
+}
+
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.innerHorizontal {
+  width: 90%;
+  margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+  .innerHorizontal {
+    width: 30%;
+  }
+}
