@@ -4,12 +4,12 @@ import { Word } from './components/Word'
 import { useQuery } from '@tanstack/react-query'
 
 export const App = () => {
-  const wordGeneratorUrl = 'https://tools.atatus.com/tools/random-word-generator'
-  const body = { wordLength: '1' }
+  const wordGeneratorUrl = 'https://gfdib-cors-anywhere.herokuapp.com/https://randomwordgenerator.com/json/words_ws.json'
 
   async function fetchWord() {
-    const response = await axios.post(wordGeneratorUrl, body)
-    return response.data[0]
+    const response = await axios.get(wordGeneratorUrl)
+    const singleWord = response.data.data[Math.ceil(Math.random() * 3254)].word.value
+    return singleWord
   }
 
   const { data: word, refetch: getWord } = useQuery(['word'], fetchWord, {

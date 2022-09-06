@@ -2,6 +2,8 @@ import { capitalize } from '../utils/formatting'
 import { Definition } from './Definition'
 
 export const Word = ({ word }: { word: string }) => {
+  console.log('WORD:', word)
+
   if (word === undefined)
     return (
       <div className="outer">

@@ -1,18 +1,16 @@
-import { Definition } from '../types/api'
-import { capitalize } from '../utils/formatting'
+// import { RootObject } from '../types/dictionaryApi'
+// import { capitalize } from '../utils/formatting'
 
-export const Example = ({ singleDefinition }: { singleDefinition: Definition }) => {
-  if (singleDefinition.example === undefined) return <></>
-
-  return (
-    <>
-      {singleDefinition.example === '' ? (
-        <></>
-      ) : (
-        <p>
-          <span style={{ color: 'burlywood' }}>Example: </span> {capitalize(singleDefinition.example)}
-        </p>
-      )}
-    </>
-  )
-}
+// export const Example = ({ dictResponse }: { dictResponse: RootObject }) => {
+//    return (
+//     <>
+//       {dictResponse[0].sseq[0][0] === '' ? (
+//         <></>
+//       ) : (
+//         <p>
+//           <span style={{ color: 'burlywood' }}>Example: </span> {capitalize(dictResponse.example)}
+//         </p>
+//       )}
+//     </>
+//   )
+// }
