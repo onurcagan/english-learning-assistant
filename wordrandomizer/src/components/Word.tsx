@@ -1,9 +1,7 @@
-import { capitalize } from '../utils/formatting'
+import { capitalizeAndFormat } from '../utils/formatting'
 import { Definition } from './Definition'
 
 export const Word = ({ word }: { word: string }) => {
-  console.log('WORD:', word)
-
   if (word === undefined)
     return (
       <div className="outer">
@@ -16,7 +14,7 @@ export const Word = ({ word }: { word: string }) => {
       </div>
     )
 
-  const wordCapitalized = capitalize(word)
+  const wordCapitalized = capitalizeAndFormat(word)?.substring(0, word.length) // Substring is used to get rid of the dot at the end.
 
   return (
     <>

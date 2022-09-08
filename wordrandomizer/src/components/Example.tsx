@@ -1,16 +1,21 @@
-// import { RootObject } from '../types/dictionaryApi'
-// import { capitalize } from '../utils/formatting'
+import { capitalizeAndFormat } from '../utils/formatting'
 
-// export const Example = ({ dictResponse }: { dictResponse: RootObject }) => {
-//    return (
-//     <>
-//       {dictResponse[0].sseq[0][0] === '' ? (
-//         <></>
-//       ) : (
-//         <p>
-//           <span style={{ color: 'burlywood' }}>Example: </span> {capitalize(dictResponse.example)}
-//         </p>
-//       )}
-//     </>
-//   )
-// }
+export const Example = ({ definition, exampleIndex }) => {
+  const example = definition?.def?.[0]?.sseq?.[exampleIndex]?.[0]?.[1]?.dt?.[1]?.[1]?.[0]?.t
+
+  if (example === undefined || example === '') return <></>
+
+  const getRidOfCurlyBrackets = (string: string) => {
+    const regex = new RegExp('{[^}]*}', 'g')
+    const exampleWithNoCurlyBrackets = string.replace(regex, '')
+    return exampleWithNoCurlyBrackets
+  }
+
+  return (
+    <>
+      <p>
+        <span style={{ color: 'burlywood' }}>Example: </span> {capitalizeAndFormat(getRidOfCurlyBrackets(example))}
+      </p>
+    </>
+  )
+}

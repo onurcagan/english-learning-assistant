@@ -11,7 +11,6 @@ export const useDefinitionQuery = (word: string) => {
       method: 'GET',
       url: dictionaryRequestUrl,
     })
-
     return response.data
   }
 
