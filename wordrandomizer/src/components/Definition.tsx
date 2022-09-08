@@ -39,8 +39,6 @@ export const Definition = ({ word }: { word: string }) => {
     return <></>
   }
 
-  console.log(dictResponse)
-
   return (
     <>
       {dictResponse.map((definitions: RootObject, index: number) => {
