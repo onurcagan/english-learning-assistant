@@ -1,13 +1,33 @@
-import { useDefinitionQuery } from '../hooks/useDefinitionQuery'
+import { AxiosError } from 'axios'
 import { RootObject } from '../types/dictionaryApi'
 import { capitalizeAndFormat } from '../utils/formatting'
 import { Example } from './Example'
 
-export const Definition = ({ word }: { word: string }) => {
-  const { isLoading, error, data: dictResponse } = useDefinitionQuery(word)
+export const Definitions = ({
+  word,
+  isLoading,
+  error,
+  dictResponse,
+}: {
+  word: string
+  isLoading: any
+  error: AxiosError<unknown, any> | null
+  dictResponse: any
+}) => {
   if (word === undefined) return <></>
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading)
+    return (
+      <>
+        <div className="outer">
+          <div className="middle">
+            <div className="inner">
+              <p>Loading...</p>
+            </div>
+          </div>
+        </div>
+      </>
+    )
 
   if (error && dictResponse === undefined) {
     if (error.response?.status === 404) return <p>This word doesn't exist in the dictionary.</p>
@@ -17,12 +37,14 @@ export const Definition = ({ word }: { word: string }) => {
 
   /**
    * @description Checks whether there is an exact match with the word and the definition for the word received from the dictionary.
-   * @returns true or false depending on the match.
+   * @returns true if there is a match, false otherwise.
    */
   const testDictResponse = (string: string) => {
-    const regex = new RegExp('^' + word + '?:?:?\\d?$', 'g') // Regex that matches word, word:1, word:2, word:3 and so on.
+    const regex = new RegExp('^' + word + '?:?:?\\d?$', 'g') // Regex that matches word, words, word:1, word:2, words:1, words:2 and so on.
     return regex.test(string)
   }
+
+  const definitionsArray = dictResponse?.flatMap((x) => (testDictResponse(x?.meta?.id) ? x?.shortdef : []))
 
   /**
    * @description Returns definition if it's not empty.
@@ -41,20 +63,21 @@ export const Definition = ({ word }: { word: string }) => {
 
   return (
     <>
-      {dictResponse.map((definitions: RootObject, index: number) => {
+      <h3>{definitionsArray?.length > 1 ? 'Definitions' : 'Definition'}</h3>
+      {dictResponse?.map((definitions: RootObject, index: number) => {
+        const metaId = definitions?.meta?.id
+        const shortDef = definitions?.shortdef
         // For cases where the word exists in the dictionary but has no shortDefinition
-        if (testDictResponse(definitions.meta.id) && definitions.shortdef[0] === undefined)
-          return <div key={index}>This word doesn't exist in the dictionary.{index}</div>
-        return definitions.shortdef.map((shortDefinition, innerIndex: number) => {
+        if (testDictResponse(metaId) && shortDef?.[0] === undefined && index === 0)
+          return <div key={index}>This word doesn't exist in the dictionary.</div>
+        return shortDef?.map((shortDefinition, innerIndex: number) => {
           return (
             <ol key={innerIndex}>
-              {(index === 0 && innerIndex === 0) || !testDictResponse(definitions.meta.id) ? <></> : <hr />}
+              {(index === 0 && innerIndex === 0) || !testDictResponse(metaId) ? <></> : <hr />}
               <li key={innerIndex}>
-                {testDictResponse(definitions.meta.id)
-                  ? returnDefinitionIfNotEmpty(shortDefinition)
-                  : returnWordNotFound(index, innerIndex)}
+                {testDictResponse(metaId) ? returnDefinitionIfNotEmpty(shortDefinition) : returnWordNotFound(index, innerIndex)}
               </li>
-              {testDictResponse(definitions.meta.id) ? <Example definition={definitions} exampleIndex={innerIndex} /> : <></>}
+              {testDictResponse(metaId) ? <Example definition={definitions} exampleIndex={innerIndex} /> : <></>}
             </ol>
           )
         })
