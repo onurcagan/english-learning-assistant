@@ -1,10 +1,11 @@
 import { useDefinitionQuery } from '../hooks/useDefinitionQuery'
 import { capitalizeAndFormat } from '../utils/formatting'
 import { Definitions } from './Definition'
+import { Loading } from './Loading'
 import { Synonyms } from './Synonyms'
 
 export const Word = ({ word }: { word: string }) => {
-  const { isLoading, error, data: dictResponse } = useDefinitionQuery(word)
+  const { isLoading: isDefinitionLoading, error, data: dictResponse } = useDefinitionQuery(word)
 
   if (word === undefined)
     return (
@@ -21,12 +22,12 @@ export const Word = ({ word }: { word: string }) => {
 
   return (
     <>
-      <div className="innerHorizontal">
+      <>
         <h3>Word</h3>
         <p>{wordCapitalized}</p>
         <Synonyms word={word} dictResponse={dictResponse} />
-        <Definitions word={word} isLoading={isLoading} error={error} dictResponse={dictResponse} />
-      </div>
+        <Definitions word={word} isLoading={isDefinitionLoading} error={error} dictResponse={dictResponse} />
+      </>
     </>
   )
 }

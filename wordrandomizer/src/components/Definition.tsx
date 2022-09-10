@@ -66,11 +66,11 @@ export const Definitions = ({
       <h3>{definitionsArray?.length > 1 ? 'Definitions' : 'Definition'}</h3>
       {dictResponse?.map((definitions: RootObject, index: number) => {
         const metaId = definitions?.meta?.id
-        const shortDef = definitions?.shortdef
+        const shortDefs = definitions?.shortdef
         // For cases where the word exists in the dictionary but has no shortDefinition
-        if (testDictResponse(metaId) && shortDef?.[0] === undefined && index === 0)
+        if (testDictResponse(metaId) && definitionsArray === undefined && index === 0)
           return <div key={index}>This word doesn't exist in the dictionary.</div>
-        return shortDef?.map((shortDefinition, innerIndex: number) => {
+        return shortDefs?.map((shortDefinition, innerIndex: number) => {
           return (
             <ol key={innerIndex}>
               {(index === 0 && innerIndex === 0) || !testDictResponse(metaId) ? <></> : <hr />}

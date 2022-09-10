@@ -1,17 +1,10 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import Button from '@mui/material/Button'
 import { Word } from './components/Word'
 import { useQuery } from '@tanstack/react-query'
+import { fetchWord } from './services/fetchWord'
 
 export const App = () => {
-  const wordGeneratorUrl = 'https://gfdib-cors-anywhere.herokuapp.com/https://tools.atatus.com/tools/random-word-generator'
-  const body = { wordLength: '1' }
-
-  async function fetchWord() {
-    const response = await axios.post(wordGeneratorUrl, body)
-    return response.data[0]
-  }
-
   const { data: word, refetch: getWord } = useQuery<any, AxiosError>(['word'], fetchWord, {
     refetchOnWindowFocus: false,
     enabled: false,
@@ -30,10 +23,12 @@ export const App = () => {
           height: 'calc(100% - 60px)',
           overflowY: 'auto',
           textAlign: 'center',
-          color: 'white',
+          color: 'lightGray',
         }}
       >
-        <Word word={word} />
+        <div className="innerHorizontal">
+          <Word word={word} />
+        </div>
       </div>
       <div
         style={{
