@@ -1,14 +1,8 @@
-import { AxiosError } from 'axios'
 import Button from '@mui/material/Button'
 import { Word } from './components/Word'
-import { useQuery } from '@tanstack/react-query'
-import { fetchWord } from './services/fetchWord'
-
+import { useWordGenerationQuery } from './hooks/useWordGenerationQuery'
 export const App = () => {
-  const { data: word, refetch: getWord } = useQuery<any, AxiosError>(['word'], fetchWord, {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  })
+  const { refetch: getWord } = useWordGenerationQuery()
 
   const handleButtonClick = () => {
     getWord()
@@ -27,7 +21,7 @@ export const App = () => {
         }}
       >
         <div className="innerHorizontal">
-          <Word word={word} />
+          <Word />
         </div>
       </div>
       <div

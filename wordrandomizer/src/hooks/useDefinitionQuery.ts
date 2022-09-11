@@ -17,5 +17,6 @@ export const useDefinitionQuery = (word: string) => {
   return useQuery<any, AxiosError>(['dictResponse', word], fetchDictResponse, {
     refetchOnWindowFocus: false,
     enabled: !!word,
+    staleTime: Infinity,
   })
 }

@@ -1,33 +1,11 @@
-import { AxiosError } from 'axios'
+import { Skeleton } from '@mui/material'
+import { useDefinitionQuery } from '../hooks/useDefinitionQuery'
 import { RootObject } from '../types/dictionaryApi'
 import { capitalizeAndFormat } from '../utils/formatting'
 import { Example } from './Example'
 
-export const Definitions = ({
-  word,
-  isLoading,
-  error,
-  dictResponse,
-}: {
-  word: string
-  isLoading: any
-  error: AxiosError<unknown, any> | null
-  dictResponse: any
-}) => {
-  if (word === undefined) return <></>
-
-  if (isLoading)
-    return (
-      <>
-        <div className="outer">
-          <div className="middle">
-            <div className="inner">
-              <p>Loading...</p>
-            </div>
-          </div>
-        </div>
-      </>
-    )
+export const Definitions = ({ word }: { word: string }) => {
+  const { isFetching: isDefinitionFetching, error, data: dictResponse } = useDefinitionQuery(word)
 
   if (error && dictResponse === undefined) {
     if (error.response?.status === 404) return <p>This word doesn't exist in the dictionary.</p>
@@ -60,6 +38,21 @@ export const Definitions = ({
     if (index1 === 0 && index2 === 0) return <>This word doesn't exist in the dictionary.</>
     return <></>
   }
+
+  if (isDefinitionFetching)
+    return (
+      <>
+        <h3>Definitions</h3>{' '}
+        {/* Not checking definitionsArraylength while fetching as its always 0. And more often that not you get multiple Definitions so I default to Definitions. */}
+        <div style={{ width: '50%', margin: '0 auto' }}>
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+          <hr />
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+          <hr />
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+        </div>
+      </>
+    )
 
   return (
     <>
