@@ -20,7 +20,7 @@ export const Synonyms = ({ word }) => {
     <>
       {Array.isArray(listOfSynonyms) && listOfSynonyms.length ? (
         <>
-          {listOfSynonyms.length > 1 ? <h3>Synonyms</h3> : <h3>Synonym</h3>}
+          {listOfSynonyms.length > 1 ? <h3>{listOfSynonyms.length > 1 ? 'Synonyms' : 'Synonym'}</h3> : <h3>Synonym</h3>}
           <div>{listOfSynonyms.join(', ')}</div>
         </>
       ) : (

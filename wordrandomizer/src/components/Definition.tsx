@@ -3,6 +3,8 @@ import { useDefinitionQuery } from '../hooks/useDefinitionQuery'
 import { RootObject } from '../types/dictionaryApi'
 import { capitalizeAndFormat } from '../utils/formatting'
 import { Example } from './Example'
+import { Pronunciation } from './Pronunciation'
+import { Synonyms } from './Synonyms'
 
 export const Definitions = ({ word }: { word: string }) => {
   const { isFetching: isDefinitionFetching, error, data: dictResponse } = useDefinitionQuery(word)
@@ -22,7 +24,9 @@ export const Definitions = ({ word }: { word: string }) => {
     return regex.test(string)
   }
 
-  const definitionsArray = dictResponse?.flatMap((x) => (testDictResponse(x?.meta?.id) ? x?.shortdef : []))
+  const definitionsArray = dictResponse?.flatMap((definitions) =>
+    testDictResponse(definitions?.meta?.id) ? definitions?.shortdef : [],
+  )
 
   /**
    * @description Returns definition if it's not empty.
@@ -56,6 +60,12 @@ export const Definitions = ({ word }: { word: string }) => {
 
   return (
     <>
+      {dictResponse?.[0]?.hwi?.prs?.[0]?.sound?.audio === undefined && testDictResponse(dictResponse?.[0]?.meta?.id) ? (
+        <></>
+      ) : (
+        <Pronunciation dictResponse={dictResponse} />
+      )}
+      <Synonyms word={word} />
       <h3>{definitionsArray?.length > 1 ? 'Definitions' : 'Definition'}</h3>
       {dictResponse?.map((definitions: RootObject, index: number) => {
         const metaId = definitions?.meta?.id

@@ -2,7 +2,6 @@ import { Skeleton } from '@mui/material'
 import { useWordGenerationQuery } from '../hooks/useWordGenerationQuery'
 import { capitalizeAndFormat } from '../utils/formatting'
 import { Definitions } from './Definition'
-import { Synonyms } from './Synonyms'
 
 export const Word = () => {
   const { isFetching: isWordFetching, data: word } = useWordGenerationQuery()
@@ -34,7 +33,6 @@ export const Word = () => {
     <>
       <h3>Word</h3>
       <p>{wordCapitalized}</p>
-      <Synonyms word={word} />
       <Definitions word={word} />
     </>
   )
