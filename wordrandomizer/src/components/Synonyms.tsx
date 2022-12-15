@@ -1,6 +1,6 @@
 import { useDefinitionQuery } from '../hooks/useDefinitionQuery'
 
-export const Synonyms = ({ word }) => {
+export const Synonyms = ({ word }: { word: string }) => {
   const { data: dictResponse } = useDefinitionQuery(word)
   const synonymsInASentence = dictResponse?.[0]?.syns?.[0]?.pt?.[0]?.[1]
 

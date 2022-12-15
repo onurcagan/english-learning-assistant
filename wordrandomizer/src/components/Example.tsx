@@ -1,6 +1,7 @@
+import { RootObject } from '../types/dictionaryApi'
 import { capitalizeAndFormat } from '../utils/formatting'
 
-export const Example = ({ definition, exampleIndex }) => {
+export const Example = ({ definition, exampleIndex }: { definition: RootObject; exampleIndex: number }) => {
   const example = definition?.def?.[0]?.sseq?.[exampleIndex]?.[0]?.[1]?.dt?.[1]?.[1]?.[0]?.t
 
   if (example === undefined || example === '') return <></>

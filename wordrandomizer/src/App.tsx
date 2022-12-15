@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button'
 import { Word } from './components/Word'
 import { useWordGenerationQuery } from './hooks/useWordGenerationQuery'
+
 export const App = () => {
   const { refetch: getWord } = useWordGenerationQuery()
 

@@ -19,29 +19,15 @@ export const Definitions = ({ word }: { word: string }) => {
    * @description Checks whether there is an exact match with the word and the definition for the word received from the dictionary.
    * @returns true if there is a match, false otherwise.
    */
-  const testDictResponse = (string: string) => {
-    const regex = new RegExp('^' + word + '?:?:?\\d?$', 'g') // Regex that matches word, words, word:1, word:2, words:1, words:2 and so on.
+  const isExactMatchFound = (string: string) => {
+    const regex = new RegExp('^' + word.toLowerCase() + '?:?\\d?$', 'g') // Regex that matches word, words, word:1, word:2, words:1, words:2 and so on.
+
     return regex.test(string)
   }
 
   const definitionsArray = dictResponse?.flatMap((definitions) =>
-    testDictResponse(definitions?.meta?.id) ? definitions?.shortdef : [],
+    isExactMatchFound(definitions?.meta?.id) ? definitions?.shortdef : [],
   )
-
-  /**
-   * @description Returns definition if it's not empty.
-   * @returns definition or a preset word doesn't exist msg.
-   */
-  const returnDefinitionIfNotEmpty = (string: string) => {
-    if (string === undefined || string === '') return <>This word doesn't exist in the dictionary.</>
-
-    return capitalizeAndFormat(string)
-  }
-
-  const returnWordNotFound = (index1: number, index2: number) => {
-    if (index1 === 0 && index2 === 0) return <>This word doesn't exist in the dictionary.</>
-    return <></>
-  }
 
   if (isDefinitionFetching)
     return (
@@ -60,30 +46,48 @@ export const Definitions = ({ word }: { word: string }) => {
 
   return (
     <>
-      {dictResponse?.[0]?.hwi?.prs?.[0]?.sound?.audio === undefined && testDictResponse(dictResponse?.[0]?.meta?.id) ? (
-        <></>
-      ) : (
+      {(dictResponse?.[0]?.hwi?.prs?.[0]?.sound?.audio !== undefined || !isExactMatchFound(dictResponse?.[0]?.meta?.id)) && (
         <Pronunciation dictResponse={dictResponse} />
       )}
+
       <Synonyms word={word} />
-      <h3>{definitionsArray?.length > 1 ? 'Definitions' : 'Definition'}</h3>
+
+      <h3>Definition{definitionsArray?.length > 1 && 's'}</h3>
+
       {dictResponse?.map((definitions: RootObject, index: number) => {
         const metaId = definitions?.meta?.id
         const shortDefs = definitions?.shortdef
+
         // For cases where the word exists in the dictionary but has no shortDefinition
-        if (testDictResponse(metaId) && definitionsArray === undefined && index === 0)
+        if (isExactMatchFound(metaId) && definitionsArray === undefined && index === 0) {
           return <div key={index}>This word doesn't exist in the dictionary.</div>
-        return shortDefs?.map((shortDefinition, innerIndex: number) => {
-          return (
-            <ol key={innerIndex}>
-              {(index === 0 && innerIndex === 0) || !testDictResponse(metaId) ? <></> : <hr />}
-              <li key={innerIndex}>
-                {testDictResponse(metaId) ? returnDefinitionIfNotEmpty(shortDefinition) : returnWordNotFound(index, innerIndex)}
-              </li>
-              {testDictResponse(metaId) ? <Example definition={definitions} exampleIndex={innerIndex} /> : <></>}
-            </ol>
-          )
-        })
+        }
+
+        return (
+          <ol key={index}>
+            {shortDefs?.map((shortDefinition, innerIndex: number) => {
+              // TODO; early returns here instead of ternary ifs
+              return (
+                <li key={innerIndex}>
+                  {(index === 0 && innerIndex === 0) || !isExactMatchFound(metaId) ? <></> : <hr />}
+
+                  <div>
+                    {isExactMatchFound(metaId) ? (
+                      shortDefinition ? (
+                        capitalizeAndFormat(shortDefinition)
+                      ) : (
+                        <>This word doesn't exist in the dictionary.</>
+                      )
+                    ) : (
+                      index === 0 && innerIndex === 0 && <>This word doesn't exist in the dictionary.</>
+                    )}
+                  </div>
+                  {isExactMatchFound(metaId) && <Example definition={definitions} exampleIndex={innerIndex} />}
+                </li>
+              )
+            })}
+          </ol>
+        )
       })}
     </>
   )
