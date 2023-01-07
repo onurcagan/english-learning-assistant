@@ -77,3 +77,13 @@ hr {
     width: 30%;
   }
 }
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+}

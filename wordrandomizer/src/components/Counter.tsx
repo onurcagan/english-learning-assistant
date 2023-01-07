@@ -1,3 +1,4 @@
+import { AiFillFire } from 'react-icons/ai'
 import React from 'react'
 
 export const Counter = ({ count }: { count: number }) => {
@@ -29,7 +30,29 @@ export const Counter = ({ count }: { count: number }) => {
     >
       {' '}
       <h3>Streak</h3>
-      <div style={{ textAlign: 'center', fontSize: '1.5rem', color: counterColor() }}>{count}</div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <AiFillFire
+          size={'1.6rem'}
+          style={{
+            color: '#F55301',
+            marginRight: '10px',
+            transition: 'opacity 1s ease',
+            opacity: `${count > 9 ? 1 : 0}`,
+            animation: 'wiggle .15s infinite',
+          }}
+        />
+        <div style={{ textAlign: 'center', fontSize: '1.5rem', color: counterColor() }}>{count}</div>
+        <AiFillFire
+          size={'1.6rem'}
+          style={{
+            color: '#F55301',
+            marginLeft: '10px',
+            transition: 'opacity 1s ease',
+            opacity: `${count > 9 ? 1 : 0}`,
+            animation: 'wiggle .15s infinite',
+          }}
+        />
+      </div>
     </div>
   )
 }
