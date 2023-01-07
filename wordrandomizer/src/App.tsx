@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Counter } from './components/Counter'
 import { GenerateButton } from './components/GenerateButton'
 import { Word } from './components/Word'
 import { YesNoButton } from './components/YesNoButton'
@@ -5,13 +7,14 @@ import { useWordGenerationQuery } from './hooks/useWordGenerationQuery'
 
 export const App = () => {
   const { refetch: getWord, data: word } = useWordGenerationQuery()
-
+  const [streakCount, setStreakCount] = useState(0)
   const handleButtonClick = () => {
     getWord()
   }
 
   return (
     <>
+      {word && <Counter count={streakCount} />}
       <div
         style={{
           margin: '0 auto',
@@ -32,7 +35,7 @@ export const App = () => {
           bottom: '0',
           left: '50%',
           transform: 'translate(-50%, 0)',
-          paddingTop: '30px',
+          paddingTop: '10px',
           paddingBottom: '15px',
           msOverflowStyle: 'none',
           scrollbarWidth: 'none',
@@ -40,7 +43,11 @@ export const App = () => {
           width: '100%',
         }}
       >
-        {word ? <YesNoButton onClick={handleButtonClick} /> : <GenerateButton onClick={handleButtonClick} />}
+        {word ? (
+          <YesNoButton onClick={handleButtonClick} setStreak={setStreakCount} />
+        ) : (
+          <GenerateButton onClick={handleButtonClick} />
+        )}
       </div>
     </>
   )

@@ -1,6 +1,15 @@
 import { Button } from '@mui/material'
+import { Dispatch, SetStateAction } from 'react'
 
-export const YesNoButton = ({ onClick }: { onClick: () => void }) => {
+export const YesNoButton = ({ onClick, setStreak }: { onClick: () => void; setStreak: Dispatch<SetStateAction<number>> }) => {
+  const addToStreak = () => {
+    setStreak((previous) => previous + 1)
+  }
+
+  const resetStreak = () => {
+    setStreak(0)
+  }
+
   return (
     <>
       <div
@@ -13,12 +22,15 @@ export const YesNoButton = ({ onClick }: { onClick: () => void }) => {
           marginRight: 'auto',
         }}
       >
-        <div style={{ marginBottom: '20px' }}>Did you know this word?</div>
+        <h3 style={{ marginBottom: '20px', fontSize: '1rem', marginLeft: 'auto', marginRight: 'auto' }}>Knew this word?</h3>
         <div style={{ display: 'flex', gap: '1rem', width: '100%', justifyContent: 'center' }}>
           <Button
             variant="contained"
             fullWidth
-            onClick={onClick}
+            onClick={() => {
+              onClick()
+              resetStreak()
+            }}
             sx={{
               color: 'white',
               backgroundColor: 'darkred',
@@ -33,7 +45,10 @@ export const YesNoButton = ({ onClick }: { onClick: () => void }) => {
           <Button
             fullWidth
             variant="contained"
-            onClick={onClick}
+            onClick={() => {
+              onClick()
+              addToStreak()
+            }}
             sx={{
               color: 'white',
               backgroundColor: 'darkgreen',
