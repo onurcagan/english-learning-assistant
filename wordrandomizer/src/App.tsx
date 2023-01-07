@@ -1,9 +1,10 @@
-import Button from '@mui/material/Button'
+import { GenerateButton } from './components/GenerateButton'
 import { Word } from './components/Word'
+import { YesNoButton } from './components/YesNoButton'
 import { useWordGenerationQuery } from './hooks/useWordGenerationQuery'
 
 export const App = () => {
-  const { refetch: getWord } = useWordGenerationQuery()
+  const { refetch: getWord, data: word } = useWordGenerationQuery()
 
   const handleButtonClick = () => {
     getWord()
@@ -31,27 +32,15 @@ export const App = () => {
           bottom: '0',
           left: '50%',
           transform: 'translate(-50%, 0)',
-          paddingTop: '50px',
+          paddingTop: '30px',
           paddingBottom: '15px',
           msOverflowStyle: 'none',
           scrollbarWidth: 'none',
+          background: 'black',
+          width: '100%',
         }}
       >
-        <Button
-          variant="contained"
-          size="medium"
-          onClick={handleButtonClick}
-          sx={{
-            color: 'black',
-            backgroundColor: 'lightgray',
-            fontFamily: 'UniSansHeavy',
-            ':hover': {
-              bgcolor: 'gray',
-            },
-          }}
-        >
-          Generate
-        </Button>
+        {word ? <YesNoButton onClick={handleButtonClick} /> : <GenerateButton onClick={handleButtonClick} />}
       </div>
     </>
   )
