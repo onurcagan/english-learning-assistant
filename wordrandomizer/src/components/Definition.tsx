@@ -9,10 +9,14 @@ import { Synonyms } from './Synonyms'
 export const Definitions = ({ word }: { word: string }) => {
   const { isFetching: isDefinitionFetching, error, data: dictResponse } = useDefinitionQuery(word)
 
-  if (error && dictResponse === undefined) {
+  if (error) {
     if (error.response?.status === 404) return <p>This word doesn't exist in the dictionary.</p>
 
     return <p>An error occurred: {error.message}.</p>
+  }
+
+  if (dictResponse === undefined) {
+    return <p>Loading...</p>
   }
 
   /**

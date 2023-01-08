@@ -6,7 +6,7 @@ import { Definitions } from './Definition'
 export const Word = () => {
   const { isFetching: isWordFetching, data: word } = useWordGenerationQuery()
 
-  if (word === undefined && !isWordFetching)
+  if (word === undefined)
     return (
       <div className="outer">
         <div className="middle">
