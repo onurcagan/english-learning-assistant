@@ -2,7 +2,7 @@ import PlayCircleRoundedIcon from '@mui/icons-material/PlayCircleRounded'
 import { useRef } from 'react'
 import { RootObject } from '../types/dictionaryApi'
 
-export const Pronunciation = ({ dictResponse }: { dictResponse: RootObject }) => {
+export const Pronunciation = ({ dictResponse }: { dictResponse: RootObject[] }) => {
   const languageCode = 'en'
   const countryCode = 'us'
   const soundFormat = 'mp3'
