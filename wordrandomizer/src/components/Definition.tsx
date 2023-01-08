@@ -9,11 +9,28 @@ import { Synonyms } from './Synonyms'
 export const Definitions = ({ word }: { word: string }) => {
   const { isFetching: isDefinitionFetching, error, data: dictResponse } = useDefinitionQuery(word)
 
+  console.log(dictResponse)
+
   if (error) {
     if (error.response?.status === 404) return <p>This word doesn't exist in the dictionary.</p>
 
     return <p>An error occurred: {error.message}.</p>
   }
+
+  if (isDefinitionFetching)
+    return (
+      <>
+        <h3>Definitions</h3>{' '}
+        {/* Not checking definitionsArraylength while fetching as its always 0. And more often that not you get multiple Definitions so I default to Definitions. */}
+        <div style={{ width: '50%', margin: '0 auto' }}>
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+          <hr />
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+          <hr />
+          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
+        </div>
+      </>
+    )
 
   if (dictResponse === undefined) {
     return <p>Loading...</p>
@@ -30,23 +47,8 @@ export const Definitions = ({ word }: { word: string }) => {
   }
 
   const definitionsArray = dictResponse?.flatMap((definitions) =>
-    isExactMatchFound(definitions?.meta?.id) ? definitions?.shortdef : [],
+    isExactMatchFound(definitions?.meta?.id) && definitions.shortdef.length !== 0 ? definitions?.shortdef : [],
   )
-
-  if (isDefinitionFetching)
-    return (
-      <>
-        <h3>Definitions</h3>{' '}
-        {/* Not checking definitionsArraylength while fetching as its always 0. And more often that not you get multiple Definitions so I default to Definitions. */}
-        <div style={{ width: '50%', margin: '0 auto' }}>
-          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
-          <hr />
-          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
-          <hr />
-          <Skeleton variant="rounded" animation="pulse" sx={{ bgcolor: 'grey.400' }}></Skeleton>
-        </div>
-      </>
-    )
 
   return (
     <>
@@ -67,6 +69,9 @@ export const Definitions = ({ word }: { word: string }) => {
           return <div key={index}>This word doesn't exist in the dictionary.</div>
         }
 
+        if (definitionsArray.length === 0 && index === 1) {
+          return <p key={index}>This word has no definition.</p>
+        }
         return (
           <ol key={index}>
             {shortDefs?.map((shortDefinition, innerIndex: number) => {
