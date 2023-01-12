@@ -19,7 +19,7 @@ export const App = () => {
         style={{
           margin: '0 auto',
           width: '100%',
-          height: 'calc(100% - 60px)',
+          height: 'calc(100% - 200px)',
           overflowY: 'auto',
           textAlign: 'center',
           color: 'lightGray',
@@ -29,6 +29,8 @@ export const App = () => {
           <Word />
         </div>
       </div>
+
+      {/* Yes No / Bottom Buttons Div */}
       <div
         style={{
           position: 'fixed',
