@@ -9,8 +9,6 @@ import { Synonyms } from './Synonyms'
 export const Definitions = ({ word }: { word: string }) => {
   const { isFetching: isDefinitionFetching, error, data: dictResponse } = useDefinitionQuery(word)
 
-  console.log(dictResponse)
-
   if (error) {
     if (error.response?.status === 404) return <p>This word doesn't exist in the dictionary.</p>
 
