@@ -44,6 +44,7 @@ export const Definitions = ({ word }: { word: string }) => {
     return regex.test(string)
   }
 
+  console.log(dictResponse)
   const definitionsArray = dictResponse?.flatMap((definitions) =>
     isExactMatchFound(definitions?.meta?.id) && definitions.shortdef.length !== 0 ? definitions?.shortdef : [],
   )

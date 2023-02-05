@@ -29,12 +29,10 @@ export const Word = () => {
 
   if (word === undefined) return <p>Loading</p>
 
-  const wordCapitalized = capitalizeAndFormat(word)?.substring(0, word.length) // Substring is used to get rid of the dot at the end.
-
   return (
     <>
       <h3>Word</h3>
-      <p>{wordCapitalized}</p>
+      <p>{word}</p>
       <Definitions word={word} />
     </>
   )
