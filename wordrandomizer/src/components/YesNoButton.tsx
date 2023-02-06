@@ -1,5 +1,6 @@
 import { Button } from '@mui/material'
 import { Dispatch, SetStateAction } from 'react'
+import { ScrollIndicator } from './ScrollIndicator'
 
 export const YesNoButton = ({ onClick, setStreak }: { onClick: () => void; setStreak: Dispatch<SetStateAction<number>> }) => {
   const addToStreak = () => {

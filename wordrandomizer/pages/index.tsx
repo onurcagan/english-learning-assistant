@@ -21,7 +21,7 @@ export default function Index() {
           margin: '0 auto',
           width: '100%',
           height: 'calc(100vh - 210px)',
-          overflowY: 'overlay',
+          overflowY: 'auto',
           textAlign: 'center',
           color: 'lightGray',
         }}
@@ -53,6 +53,7 @@ export default function Index() {
           <GenerateButton onClick={handleButtonClick} />
         )}
       </div>
+      <div style={{ position: 'fixed', bottom: 20, right: 20 }} className="arrow"></div>
     </>
   )
 }

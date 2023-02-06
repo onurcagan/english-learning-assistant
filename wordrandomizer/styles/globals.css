@@ -28,6 +28,10 @@ html {
   width: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 h3 {
   margin-top: 15px;
   text-decoration: underline;
@@ -91,5 +95,16 @@ hr {
   }
   50% {
     transform: rotate(20deg);
+  }
+}
+
+@keyframes fade-out-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
   }
 }
