@@ -4,9 +4,11 @@ The website generates random English words, along with their definitions, synony
 
 ## Work-in-Progress & To-Dos
 
-- [ ] Add favorites
-- [ ] Make every word on screen be clickable and when clicked show their definition
-- [x] Fix the vertical scrollbar pushing the page content to the side
+- [ ] Add SSR to prevent exposing the dictionary api key with client side calls and improve performance.
+- [ ] Add a favorites.
+- [ ] Add a login w/ Google.
+- [ ] Make every word on screen be clickable and when clicked show their definition.
+- [x] Fix the vertical scrollbar pushing the page content to the side.
   - Options found so far:
     - Have a scrollbar showing up at all times with overflow:scroll, and since on mobile the scrollbar doesn't take up any space I need to account for it using media queries.
     - Calculating the width of the scrollbar and experimenting with a padding-left or a minus margin-right.
