@@ -1,6 +1,5 @@
 import { Skeleton } from '@mui/material'
 import { useWordGenerationQuery } from '../hooks/useWordGenerationQuery'
-import { capitalizeAndFormat } from '../utils/formatting'
 import { Definitions } from './Definition'
 
 export const Word = () => {

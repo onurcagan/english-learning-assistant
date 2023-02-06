@@ -10,12 +10,16 @@ export const GenerateButton = ({ onClick }: { onClick: () => void }) => {
         width: '100px',
         marginLeft: 'auto',
         marginRight: 'auto',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '90px',
       }}
     >
       <Button
         variant="contained"
         size="medium"
         onClick={onClick}
+        style={{ marginTop: 'auto', marginBottom: 'auto' }}
         sx={{
           color: 'black',
           backgroundColor: 'lightgray',

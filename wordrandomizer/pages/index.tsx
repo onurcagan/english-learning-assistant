@@ -16,16 +16,17 @@ export default function Index() {
     <>
       {word && <Counter count={streakCount} />}
       <div
+        className="wordContainer"
         style={{
           margin: '0 auto',
           width: '100%',
-          height: 'calc(100% - 200px)',
+          height: 'calc(100vh - 210px)',
           overflowY: 'auto',
           textAlign: 'center',
           color: 'lightGray',
         }}
       >
-        <div className="innerHorizontal">
+        <div className="wordContainerInner">
           <Word />
         </div>
       </div>
@@ -43,6 +44,7 @@ export default function Index() {
           scrollbarWidth: 'none',
           background: 'black',
           width: '100%',
+          height: '90px',
         }}
       >
         {word ? (
