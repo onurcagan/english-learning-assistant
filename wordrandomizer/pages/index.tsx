@@ -21,7 +21,7 @@ export default function Index() {
           margin: '0 auto',
           width: '100%',
           height: 'calc(100vh - 210px)',
-          overflowY: 'auto',
+          overflowY: 'overlay',
           textAlign: 'center',
           color: 'lightGray',
         }}
