@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios'
 
 export const useWordGenerationQuery = () => {
   const fetchWord = async (): Promise<string> => {
-    const res = await axios.get('https://onurcagan.netlify.app/api/word')
+    const res = await axios.get('https://onurcagan.dev/api/word')
     return res.data
   }
 
