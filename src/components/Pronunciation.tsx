@@ -19,12 +19,14 @@ export const Pronunciation = ({ dictResponse }: { dictResponse: RootObject[] }) 
    * Sets subDirectory variable.
    */
   const setSubDirectory = () => {
-    if (audioName.substring(0, 3) === 'bix') subDirectory = 'bix'
-    else if (audioName.substring(0, 2) === 'gg') subDirectory = 'gg'
-    else if (audioName.substring(0, 1) === '_') subDirectory = 'number'
-    else subDirectory = audioName.substring(0, 1)
+    if (audioName?.substring(0, 3) === 'bix') subDirectory = 'bix'
+    else if (audioName?.substring(0, 2) === 'gg') subDirectory = 'gg'
+    else if (audioName?.substring(0, 1) === '_') subDirectory = 'number'
+    else subDirectory = audioName?.substring(0, 1)
     return subDirectory
   }
+  if (!audioName) return null
+
   const pronunciationUrl = `https://media.merriam-webster.com/audio/prons/${languageCode}/${countryCode}/${soundFormat}/${setSubDirectory()}/${audioName}.${soundFormat}`
 
   return (
